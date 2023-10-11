@@ -1,10 +1,22 @@
 import React from "react";
+import serialize from "form-serialize";
+import {useNavigate} from 'react-router-dom';
 
-class AddMovie extends React.Component {
-    render() {
+const AddMovie = () => {
+
+   const handleFormSubmit = (event) => {
+        event.preventDefault();
+        const newMovie = serialize(event.target, { hash: true });
+       // console.log(newMovie);
+        this.props.onAddMovie(newMovie);
+        
+    }
+
+        const navigate = useNavigate();
+    
         return (
             <div className="container">
-                <form className="mt-5" onSubmit={this.handleFormSubmit}>
+                <form className="mt-5" onSubmit={handleFormSubmit}>
                     <input className="form-control" id="disabledInput" type="text" placeholder="Fill The Form To Add A Movie.." disabled />
                     <div className="row ">
                         <div className="form-group col-md-10">
@@ -38,11 +50,11 @@ class AddMovie extends React.Component {
                                 name="overview" rows="5"></textarea>
                         </div>
                     </div>
-                    <input type="submit" className="btn btn-danger btn-block" value="Add Movie" />
+                    <input type="submit" onClick={() => navigate("/")} className="btn btn-danger col-12 mt-2" value="Add Movie" />
                 </form>
             </div>
         )
     }
-}
+
 
 export default AddMovie;
